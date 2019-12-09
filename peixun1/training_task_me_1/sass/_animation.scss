@@ -1,0 +1,18 @@
+/*动画*/
+/*header动画*/
+@mixin moveTo($direction) {
+    @keyframes move-#{$direction}{
+        from{
+            opacity: 0;
+            @if $direction == left {
+                transform: translateX(-60%);
+            }@else{
+                transform: translateX(-40%);
+            }
+        }
+        to{
+            opacity: 1;
+            transform: translateX(-50%);
+        }
+    }
+}

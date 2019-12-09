@@ -1,0 +1,173 @@
+.section__books{
+    position: relative;
+    width: 100%;
+    height: 80rem;
+    background-image: linear-gradient(to right bottom, #7ed56f, #28b485);
+    box-sizing: border-box;
+    overflow: hidden;
+
+    &--wrapper{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: #fff;
+        width: 80%;
+        height: 70%;
+        &-inner{
+            height: 100%;
+            background-image: url('../static/img/nat-5.jpg');
+            box-shadow: 0 0 4rem 1rem rgba(0, 0, 0, .4);
+            .books-form{
+                display: flex;
+                flex-direction: column;
+                // align-items: center;
+                justify-content: space-around;
+                width: 60%;
+                height: 100%;
+                background: rgba(255, 255, 255, 0.767);
+                padding-left: 6rem;
+                clip-path: polygon(0 0, 0 100%, 70% 100%, 100% 0);
+                .form-title{
+                    font-size: 4rem;
+                    font-weight: 700;
+                    // text-align: center;
+                    background-image: linear-gradient(to right, #7ed56f, #28b485);
+                    -webkit-background-clip: text;
+                    letter-spacing: .2rem;
+                    color: transparent;
+                    transition: all .3s;
+                    &:hover{
+                        transform: skewX(20deg) skewY(4deg) translateY(-1rem);
+                        text-shadow: .3rem 3rem 3rem rgba(0, 0, 0, .4);
+                    }
+                }
+                .input-area{
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-around;
+                    height: 30%;
+                    width: 70%;
+                    .input-name, .input-email{
+                        height: 30%;
+
+                    }
+                    .input-name{
+                         + .label{
+                             top: 23rem;
+
+                         }
+                         &:focus + .label{
+                             top: 15rem;
+                             opacity: 1;
+                         }
+                    }
+                    .input-email{
+                        + .label{
+                            top: 31rem;
+                            
+                        }
+                        &:focus + .label{
+                            top: 23rem;
+                            opacity: 1;
+                        }
+                    }
+                    .label{
+                        position: absolute;
+                        left: 7rem;
+                        font-size: 1.5rem;
+                        opacity: 0;
+                        transition: all .3s;
+                    }
+                    input{
+                        // position: relative;
+                        font-size: 2rem;
+                        outline: none;
+                        width: 90%;
+                        height: 100%;
+                        padding: 2rem;
+                        border: none;
+                        transition: all .2s;
+                        color: #aaa;
+                        border-radius: 1rem;
+                        border-bottom: 3px solid transparent;
+                        &:focus{
+                            border-bottom: 3px solid #28b485;
+                        }
+                        &:focus:invalid{
+                            border-bottom: 3px solid red;
+                        }
+
+                    }
+                }
+                .radio-area{
+                    display: flex;
+                    justify-content: space-between;
+                    width: 63%;
+                    .radio-box{
+                        input[type=radio]{
+                            position: absolute;
+                            clip: rect(0, 0, 0, 0);
+                            + .radio-name::before{
+                                content: '';
+                                display: inline-block;
+                                vertical-align: -1rem;
+                                width: 3rem;
+                                height: 3rem;
+                                margin-right: 2rem;
+                                border: 2px solid #28b485;
+                                border-radius: 50%;
+                                cursor: pointer;
+                                transition: all .2s;
+                                
+                            }
+                            &:checked + .radio-name::before{
+                                background-clip: content-box;
+                                background-color: #28b485;
+                                padding: 3px;
+                            }
+                        }
+                        .radio-name{
+                            font-size: 1.3rem;
+                        }
+                    }
+                }
+                .btn-area{
+                    a{
+                        position: relative;
+                        display: inline-flex;
+                        align-items: center;
+                        justify-content: center;
+                        text-decoration: none;
+                        height: 4rem;
+                        padding: 1rem;
+                        border-radius: 4rem;
+                        color: #fff;  
+                        background-color: #28b485;
+                        font-weight: 700;
+                        &::after{
+                            content: '';
+                            position: absolute;
+                            display: inline-block;
+                            background-color: #28b485;
+                            width: 100%;
+                            height: 100%;
+                            z-index: -1;
+                            top: 0;
+                            left: 0;
+                            border-radius: inherit;
+                            transition: all 1s;
+                            opacity: 1;
+
+                        }
+                        &:hover::after{
+                            transform: scale(1.3) ;
+                            opacity: 0;
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+}

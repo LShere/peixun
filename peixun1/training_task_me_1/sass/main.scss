@@ -1,0 +1,12 @@
+/*主要放样式文件，将其他scss import进来*/
+@import '_base';
+// @import '_variable';
+// @import '_animation';
+// @import '_mixin';
+
+
+/*----------components---------*/
+@import 'components/_navigation';
+@import 'components/_header';
+@import 'components/_main';   
+@import 'components/_footer';     

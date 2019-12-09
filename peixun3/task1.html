@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>task1</title>
+    <style>
+        .input-area{
+            position: relative;
+            width: 30%;
+            margin: 0 auto;
+            text-align: center;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+        .input-area textarea{
+            width: 90%;
+            resize: none;
+            border-radius: inherit;
+            outline: none;
+
+        }
+        .input-area::after{
+            content: '无效输入';
+            position: absolute;
+            /* width: 30px; */
+            height: 20px;
+            line-height: 20px;
+            border-radius: 3px;
+            padding: 4px;
+            opacity: 0;
+            left: 0px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            color: #fff;
+            background: rgba(223, 110, 110, .8);
+            font-size: 10px;
+            transition: all .3s;
+        }
+        .invalid::after{
+            transform: translateY(-50%) translateX(-60px);
+            opacity: 1;
+        }
+        .input-btn{
+            background: rgb(91, 127, 224);
+            color: #fff;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="input-area" id="input-area">
+        <textarea name="" id="input-textarea" cols="30" rows="10" placeholder="请输入您的兴趣爱好~~"></textarea>
+        <button class="input-btn" id='input-btn'>点我</button>
+        <div id="show-item"></div>
+    </div>
+    <script>
+        const inputArea = document.getElementById('input-area');
+        const inputText = document.getElementById('input-textarea');
+        const btn = document.getElementById('input-btn');
+        const showItem = document.getElementById('show-item');
+        let filterData = [];
+        function filter(res){
+            if(!res) return [];
+            let result = res.trim().split(/\,|\.|\s+/);
+            let copy = [];
+            for(let i of result){
+                i && copy.push(i);
+            }
+            return copy;
+        }
+        function removeAll(item){
+            return new Promise((resolve, reject) => {
+                //删除所有子节点
+                while(item.hasChildNodes()){
+                    item.removeChild(item.firstChild);
+                }
+                resolve();
+            })
+                
+        }
+        inputText.addEventListener('blur', (e) => {
+            console.log(e.target.value);
+            let result = e.target.value;
+            filterData = filter(result);
+            console.log(filterData);
+        });
+        
+        btn.onclick = () => {
+            if(filterData.length > 0 && filterData.length <= 10){
+                inputArea.classList.remove('invalid');
+                    removeAll(showItem).then(() => {
+                        for(let i in filterData){
+                            let span = document.createElement('span');
+                            span.innerHTML = filterData[i] + ' ';
+                            showItem.appendChild(span);
+                        }
+                    })
+            }else{
+                inputArea.classList.add('invalid');
+            }
+        }
+
+        // console.log(inputText)
+        // let handler = {
+        //     set: (target, key, value) => {
+        //         console.log(value);
+        //         return Reflect.set(target, key, value);
+        //     },
+        //     get: (target, key) => {
+        //         console.log(key);
+        //         return Reflect.get(target, key);
+        //     }
+        // }
+        // let p = new Proxy(inputText, handler);
+        // console.log(Object.keys(inputText))
+
+    </script>
+
+<!-- var obj = {};
+Object.defineProperty(obj,'test',{
+  set(val) {
+    document.querySelector('#aa').value = val;
+    document.querySelector('#bb').innerHTML = val;
+  }
+})
+console.log(document.querySelector('#aa'));
+document.querySelector('#aa').onkeyup = function(e) {
+  obj.test = e.target.value; -->
+</body>
+</html>

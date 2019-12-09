@@ -1,0 +1,22 @@
+<!DOCTYPE html><html lang=en><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1"><meta name=theme-color content=#fbc2eb><meta name=referrer content=never><link rel=icon href=/favicon.ico><link rel=stylesheet href=http://at.alicdn.com/t/font_1522498_r8wdj4mdz8.css><title>doubanweb</title><link href=/css/chunk-167d23d9.99f31982.css rel=prefetch><link href=/css/chunk-93be06e2.1c67fcac.css rel=prefetch><link href=/js/chunk-167d23d9.16248b61.js rel=prefetch><link href=/js/chunk-93be06e2.8faa5314.js rel=prefetch><link href=/css/app.0e74d332.css rel=preload as=style><link href=/css/chunk-vendors.fa0ba2ef.css rel=preload as=style><link href=/js/app.367fbfaa.js rel=preload as=script><link href=/js/chunk-vendors.539036fe.js rel=preload as=script><link href=/css/chunk-vendors.fa0ba2ef.css rel=stylesheet><link href=/css/app.0e74d332.css rel=stylesheet></head><body><noscript><strong>We're sorry but doubanweb doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id=app></div><script>(function(w){
+        const document = w.document;
+        const clientWidth = w.document.documentElement.clientWidth || w.document.body.clientWidth;
+        const clientHeight = w.document.documentElement.clientHeight || w.document.body.clientHeight;
+        const htmlDom = document.getElementsByTagName('html')[0];
+        htmlDom.style.fontSize = clientWidth / 20 + 'px';
+        
+      })(window)
+      const clientHeight = document.documentElement.clientHeight || w.document.body.clientHeight;
+
+      document.addEventListener('resize', ()=>{
+            let htmlWidth = document.documentElement.clientWidth || document.body.clientWidth;
+            //2.动态设置根元素字体大小
+            htmlDom.style.fontSize = htmlWidth/20 + 'px';
+            //3.防止键盘顶起fixed布局
+            let htmlHeight = document.documentElement.clientHeight || document.body.clientHeight;
+            if(htmlHeight > clientHeight){
+              document.querySelector('.tabbar').setAttribute('position', 'static');
+            }else{
+              document.querySelector('.tabbar').setAttribute('position', 'fixed');              
+            }
+          })</script><script src=/js/chunk-vendors.539036fe.js></script><script src=/js/app.367fbfaa.js></script></body></html>

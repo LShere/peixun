@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <button id="btn">点我</button>
+    <script>
+        function ajax(options){
+            this.url = options.url;
+            this.method = options.method;
+            this.data = options.data || '';
+            this.callback = options.callback;
+            this.flag = options.flag || true;
+            let xhr;
+            //1.获取xhr对象
+            if(window.XMLHttpRequest){
+                xhr = new XMLHttpRequest();
+            }
+
+            //2.判断get还是post发送数据
+            if(this.method.toLowerCase() == 'get'){
+                xhr.open('GET', this.url, this.flag);
+                xhr.send();
+            }else{
+                xhr.open('POST', this.url, this.flag);
+                //post需要设置头部
+                xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                xhr.send(this.data);
+            }
+            //3.监听状态变化
+            xhr.onreadystatechange = () => {
+                if(xhr.readyState == 4 && xhr.state == 200){
+                    if(this.method.toLowerCase() == 'get'){
+                        this.callback(JSON.parse(xhr.responseText));
+                    }else{
+                        this.callback(xhr.responseText);
+                    }
+                }
+            }
+        }
+
+        document.getElementById('btn').onclick = () => {
+            ajax({
+                url: 'http://localhost:4000',
+                method: 'get',
+                // data: 'lalala',
+                callback: res => {
+                    console.log(res);
+                }
+            })
+        }
+    </script>
+</body>
+</html>

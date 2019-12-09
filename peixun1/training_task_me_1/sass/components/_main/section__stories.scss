@@ -1,0 +1,102 @@
+.section__stories{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 60rem;
+    margin-top: 30rem;
+    &-title{
+        text-align: center;
+        font-size: 5rem;
+        background-image: linear-gradient(to right, #7ed56f, #28b485);
+        -webkit-background-clip: text; 
+        color: transparent;
+        transition: all .3s; 
+        &:hover{
+            text-shadow: 2rem 3rem 2rem rgba(0, 0, 0, .2);
+            transform: skewX(20deg) skewY(7deg);
+        }
+    } 
+    &-body{
+        
+        height: 25rem;
+        width: 80%;
+        margin: 4rem 10rem;
+        transform: skewX(-10deg) ;
+        box-shadow: 0 3rem 4rem 1rem rgba(0, 0, 0, .4);
+        &:hover{
+            .touxiang-area{
+                img{
+                    filter: blur(3px) brightness(80%);
+                    transform: scale(1.6) !important;
+                }
+                .touxiang-summary{
+                    transform: translate(-50%, -50%) !important;
+                    opacity: 1 !important;
+                }
+            }
+        }
+        .story-box{
+            padding: 3rem;
+            transform: skewX(10deg);
+            display: flex;
+            .touxiang-area{
+                position: relative; 
+                width: 15rem;
+                height: 15rem;
+                border-radius: 50%;
+                overflow: hidden;
+                shape-outside: border-box;
+                clip-path: circle(50% at 50% 50%);
+                transition: all .4s;
+                img{
+                    width: 100%;
+                    height: 100%;
+                    transform: scale(1);
+                    transition: all .4s;
+                }
+                .touxiang-summary{
+                    position: absolute;
+                    color: #fff;
+                    font-size: 2rem;
+                    text-align: center;
+                    left: 50%;
+                    top: 50%;
+                    transform: translate(-50%, -20%);
+                    transition: all .3s;
+                    opacity: 0;
+                }
+                
+            }
+            .story-body{
+                padding: 1rem;  
+                .story-title{
+                    font-size: 2rem;
+                    font-weight: 700;    
+                }
+                .story-content{
+                    margin-top: 3rem; 
+                }
+            }
+        }
+    }
+    &-bottom{
+        margin-top: 3rem;
+        a{  
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 3rem;
+            padding: 2rem;
+            color: #7ed56f;
+            text-decoration: none;
+            font-size: 2rem; 
+            transition: all .3s;
+            &:hover{
+                background: #7ed56f;
+                color: #fff;
+                transform: translateX(-1rem);
+            }
+        }
+    }
+} 

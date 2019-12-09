@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #title{
+            position: absolute;
+            top: 200px;
+            left: 200px;
+            width: 100px;
+            height: 100px;
+            background: #ccc;
+            margin: 0 auto;
+        }
+        .active{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="title">lalala</div>
+    <div id="title2"></div>
+    <div class="title"></div>
+    <div type></div>
+    <div type='dfdf'></div>
+    <script>
+
+        let title = document.getElementById('title');
+        let title2 = document.getElementById('title2');
+
+        //为元素增加一个样式名为className的样式
+        function addClass(element, className){
+            let domClassList = element.classList;
+            if(!domClassList.contains(className)){
+                domClassList.add(className);
+            }
+
+        }
+        //移除元素中的样式className
+        function removeClass(element, className){
+            let domClassList = element.classList;
+            if(domClassList.contains(className)){
+                domClassList.remove(className);
+            }
+        }
+        //判断某个元素是否为同一个父元素下的同一级的元素，返回布尔值
+        function isSiblingNode(element, siblingNode){
+            return element.parentNode === siblingNode.parentNode;
+        }  
+        //获取元素相对于浏览器窗口的位置，返回一个对象{x, y}
+        function getPosition (element) {
+            let x = 0;
+            let y = 0;
+            while(element){
+                x += element.offsetLeft;
+                y += element.offsetTop;
+                element = element.offsetParent;
+            }
+            return {x, y};
+        }
+        //不使用document.querySelector的情况下，实现一个简单的jQuery的$()
+        function $(selector) {
+            if(!selector) return;
+            let result = '';
+            let pattern = /^\[\w+\]$/;
+            let pattern2 =/^\[\w+=[a-zA-z0-9]+\]$/;
+            let dom = document.body.children;
+            if(selector.search('#') != -1){
+                result = document.getElementById(selector.substring(1));
+            }else if(selector.search('\\.') != -1){
+                let temp = selector.substring(1);
+                result = document.getElementsByClassName(temp);
+            }else if(pattern.test(selector)){
+                let tempStr = selector.substring(1, selector.length - 1);
+                for(let i in dom){
+                    if(dom[i].hasAttribute(tempStr)){
+                        result = dom[i];
+                        break;
+                    }
+                }
+            }else if(pattern2.test(selector)){
+                let tempArr = selector.substring(1, selector.length - 1).split('=');
+                for(let i in dom){
+                    if(dom[i].hasAttribute(tempArr[0]) && dom[i].getAttribute(tempArr[0]) == tempArr[1]){
+                        result = dom[i];
+                        break;
+                    }
+                }
+                
+            }else{
+                result = document.getElementsByTagName(selector);
+            }
+            return result;
+
+        }
+        
+
+        title.onclick = function(){
+            addClass(title, 'active');
+        }
+        console.log(isSiblingNode(title, title2));
+        console.log(getPosition(title));
+        console.log($('[type=dfdf]'));
+    </script>
+</body>
+</html>

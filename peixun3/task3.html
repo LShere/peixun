@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>task3</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #lunbo_area{
+            width: 500px;
+            height: 400px;
+            margin: 100px auto;
+            overflow: hidden;
+            position: relative;
+        }
+        .img-list{
+            width: 2000px;
+            overflow: hidden;
+            position: absolute;
+            left: 0;
+            /* transition: all .5s; */
+        }
+        .img-list .img-item{
+            width: 500px;
+            height: 400px;
+            list-style: none;
+            float: left;
+        }
+        .img-list .img-item img{
+            width: 500px;
+            height: 400px;
+        }
+        .dot_area{
+            position: absolute;
+            width: 100px;
+            height: 40px;
+            background: #ccc;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            
+        }
+         .dot-list{
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            transition: all .3s;
+        }
+        .dot-item{
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            list-style: none;
+            background-color: #fff;
+        }
+        .active{
+            background-color: orangered;
+        }
+    </style>
+</head>
+<body>
+    <div id='lunbo_area'>
+        <ul class="img-list" style="left: -500px;">
+            <li class="img-item"><img src="./static/img3.jpeg" alt=""></li>
+            <li class="img-item"><img src="./static/img1.jpg" alt=""></li>
+            <li class="img-item"><img src="./static/img2.jpg" alt=""></li>
+            <li class="img-item"><img src="./static/img3.jpeg" alt=""></li>
+            <li class="img-item"><img src="./static/img1.jpg" alt=""></li>
+        </ul>
+        <div class="dot_area">
+            <ul class="dot-list">
+                <li class="dot-item active" index='1'></li>
+                <li class="dot-item" index='2'></li>
+                <li class="dot-item" index='3'></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="control-area">
+        <form action="">
+                <label for="direction_plus">正方向</label>
+                <input type="radio" name="direction" id="direction_plus" value="plus" checked>
+                <label for="direction_nag">反方向</label>
+                <input type="radio" name="direction" id="direction_nag" value="nag">
+                <br>
+                <label for="interval">时间间隔</label>
+                <input type="number" id="interval">
+                <br>
+                <label for="loop">是否循环</label>
+                <select name="loop" id="loop">
+                    <option value="">请选择</option>
+                    <option value="loop">loop</option>
+                    <option value="noLoop">noLoop</option>
+                </select>
+        </form>
+    </div>
+    <script>
+        const lunboArea = document.querySelector('#lunbo_area');
+        const list = document.querySelector('.img-list');
+        const dotList = document.querySelector('.dot-list');
+        const dots = document.querySelectorAll('.dot-list li');
+        let timer = ''; //定时器函数
+        let index = 1; //轮播图小圆点初始标记
+
+        //轮播方向
+        const radios = document.getElementsByName('direction');
+        let currRadioValue = '';
+        let interval = 1500;
+        let canLoop = 'loop';
+        
+        // console.log(radio);
+        //滑动函数
+        function animate(offset, direction){
+            // if(direction == 'plus'){
+            //     offset =  offset < 0 ? offset : -offset;
+            // }else{
+            //     offset = offset > 0 ? offset : -offset;
+            // }
+            let newLeft = list.style.left != 0 ? (parseInt(list.style.left) + offset) : (list.style.left + offset);
+            if(newLeft < -1500){
+                newLeft = -500;
+            }else if(newLeft > -500){
+                newLeft = -1500;
+            }
+            console.log(newLeft);
+            list.style.left = newLeft + 'px';
+            // changeDot();
+        }
+        //向后滑动
+        function next(){
+            index = index + 1;
+            if(index > 3){
+                index = 1;
+            }
+            changeDot();
+            animate(-500);
+        }
+        //向前滑动
+        function prev(){
+            index = index - 1;
+            if(index < 1){
+                index = 3;
+            }
+            changeDot();
+            animate(500);
+        }
+        //鼠标到轮播上停止轮播
+        function stop(){
+            clearInterval(timer);
+        }
+        function play(direction, interval = 1500, canLoop = 'loop'){
+            if(canLoop == 'noLoop') return;
+            stop();
+            timer = setInterval(() => {
+                // animate(-500, currRadioValue = 'plus');
+                if(direction == 'plus'){
+                    next();
+                }else{
+                    prev();
+                }
+            }, interval);
+        }
+        //切换小圆点样式
+        function changeDot(){
+            for(let i = 0; i < dots.length; i ++){
+                if(dots[i].classList.contains('active')){
+                    dots[i].classList.remove('active');
+                }
+            }
+            dots[index - 1].classList.add('active'); 
+        }
+
+
+        lunboArea.onmouseover = stop;
+        lunboArea.onmouseout = play;
+        const plus = document.getElementById('direction_plus');
+        const nag = document.getElementById('direction_nag');
+        const inputInterval = document.getElementById('interval');
+        const loopOrnot = document.getElementById('loop');
+        loopOrnot.addEventListener('change', (e) => {
+            canLoop = e.target.value;
+            console.log(canLoop);
+            stop();
+            play(currRadioValue, parseInt(interval), canLoop);
+        })
+        inputInterval.addEventListener('blur', (e) => {
+            interval = e.target.value;
+            if(!interval) return;
+            stop();
+            play(currRadioValue, parseInt(interval), canLoop);
+        })
+        plus.onchange = function(e){
+            // console.log(e.target.value);
+            currRadioValue = e.target.value;
+            stop();
+            play(currRadioValue);
+        }
+        nag.onchange = function(e){
+            currRadioValue = e.target.value;
+            stop();
+            play(currRadioValue);
+        }
+        window.onload=() => {
+
+            for(let i of radios){
+            if(i.checked){
+                currRadioValue = i.value;
+            }
+        }
+            
+            play(currRadioValue);
+            //小圆点点击事件
+            for(let i = 0; i < dots.length; i ++){
+                dots[i].onclick = () => {
+                    console.log(i);
+                    //自定义属性只能用getAttribute获得
+                    let clickIndex = parseInt(dots[i].getAttribute('index'));
+                    console.log(clickIndex, index);
+                    let offset = (index - clickIndex) * 500;
+                    animate(offset);
+                    index = clickIndex;
+                    changeDot();
+                }
+            }
+            
+        }
+        
+    </script>
+</body>
+</html>
